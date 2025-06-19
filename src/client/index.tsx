@@ -123,7 +123,6 @@ function App() {
           autoComplete="off"
         />
         <button type="submit" className="button-primary">
-          Send
         </button>
       </form>
     </div>
