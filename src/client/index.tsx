@@ -1,6 +1,6 @@
-import { createRoot } from "react-dom/client";
-import { usePartySocket } from "partysocket/react";
-import React, { useState } from "react";
+import {createRoot} from "react-dom/client";
+import {usePartySocket} from "partysocket/react";
+import React, {useState, useEffect, useRef} from "react";
 import {
   BrowserRouter,
   Routes,
@@ -8,14 +8,15 @@ import {
   Navigate,
   useParams,
 } from "react-router";
-import { nanoid } from "nanoid";
+import {nanoid} from "nanoid";
 
-import { names, type ChatMessage, type Message } from "../shared";
+import {names, type ChatMessage, type Message} from "../shared";
 
 function App() {
   const [name] = useState(names[Math.floor(Math.random() * names.length)]);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const { room } = useParams();
+  const {room} = useParams();
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
   const socket = usePartySocket({
     party: "chat",
@@ -25,7 +26,6 @@ function App() {
       if (message.type === "add") {
         const foundIndex = messages.findIndex((m) => m.id === message.id);
         if (foundIndex === -1) {
-          // probably someone else who added a message
           setMessages((messages) => [
             ...messages,
             {
@@ -36,9 +36,6 @@ function App() {
             },
           ]);
         } else {
-          // this usually means we ourselves added a message
-          // and it was broadcasted back
-          // so let's replace the message with the new message
           setMessages((messages) => {
             return messages
               .slice(0, foundIndex)
@@ -56,11 +53,11 @@ function App() {
           messages.map((m) =>
             m.id === message.id
               ? {
-                  id: message.id,
-                  content: message.content,
-                  user: message.user,
-                  role: message.role,
-                }
+                id: message.id,
+                content: message.content,
+                user: message.user,
+                role: message.role,
+              }
               : m,
           ),
         );
@@ -70,51 +67,62 @@ function App() {
     },
   });
 
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView();
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const contentInput = e.currentTarget.elements.namedItem(
+      "content"
+    ) as HTMLInputElement;
+    const content = contentInput.value.trim();
+
+    if (content) {
+      const chatMessage: ChatMessage = {
+        id: nanoid(8),
+        content,
+        user: name,
+        role: "user",
+      };
+
+      // Optimistically add message to UI
+      setMessages((prevMessages) => [...prevMessages, chatMessage]);
+
+      socket.send(
+        JSON.stringify({
+          type: "add",
+          ...chatMessage,
+        } satisfies Message)
+      );
+
+      contentInput.value = "";
+    }
+  };
+
   return (
-    <div className="chat container">
-      {messages.map((message) => (
-        <div key={message.id} className="row message">
-          <div className="two columns user">{message.user}</div>
-          <div className="ten columns">{message.content}</div>
-        </div>
-      ))}
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          const content = e.currentTarget.elements.namedItem(
-            "content",
-          ) as HTMLInputElement;
-
-          if (!content.value) return;
-
-          const chatMessage: ChatMessage = {
-            id: nanoid(8),
-            content: content.value,
-            user: name,
-            role: "user",
-          };
-          setMessages((messages) => [...messages, chatMessage]);
-          // we could broadcast the message here
-
-          socket.send(
-            JSON.stringify({
-              type: "add",
-              ...chatMessage,
-            } satisfies Message),
-          );
-
-          content.value = "";
-        }}
-      >
+    <div className="chat-container">
+      <div className="message-list">
+        {messages.map((message) => (
+          <div key={message.id} className="message">
+            <div className="user">{message.user}:</div>
+            <div className="content">{message.content}</div>
+          </div>
+        ))}
+        <div ref={messagesEndRef}/>
+      </div>
+      <form className="input-area" onSubmit={handleSubmit}>
         <input
           type="text"
           name="content"
-          className="ten columns my-input-text"
           placeholder={`Hello ${name}! Type a message...`}
           autoComplete="off"
         />
-        <button type="submit" className="send-message two columns">
+        <button type="submit" className="button-primary">
           Send
         </button>
       </form>
@@ -126,9 +134,9 @@ function App() {
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Navigate to={`/${nanoid()}`} />} />
-      <Route path="/:room" element={<App />} />
-      <Route path="*" element={<Navigate to="/" />} />
+      <Route path="/" element={<Navigate to={`/${nanoid()}`}/>}/>
+      <Route path="/:room" element={<App/>}/>
+      <Route path="*" element={<Navigate to="/"/>}/>
     </Routes>
   </BrowserRouter>,
 );
