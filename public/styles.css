@@ -112,3 +112,29 @@ html, body {
     margin-left: 0;
   }
 }
+
+
+/* Centered and Max-Width Layout for Desktop */
+@media (min-width: 960px) {
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f2f5; /* Optional: Adds a subtle background color to the area outside the chat window */
+  }
+
+  .container {
+    width: 100%;
+    max-width: 1200px; /* Sets a maximum width for the entire chat app */
+    height: 90vh;      /* Sets the height to 90% of the viewport height */
+    margin: 0;         /* The body's flex properties will handle centering */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Optional: Adds a subtle shadow for a floating effect */
+    border-radius: 8px; /* Optional: Rounds the corners of the chat window */
+    overflow: hidden;   /* Ensures the content stays within the rounded corners */
+  }
+
+  .row {
+    height: 100%;
+    margin: 0;
+  }
+}
