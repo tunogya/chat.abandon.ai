@@ -1,98 +1,45 @@
-/*
- * Updated styles for chat.abandon.ai
- * Inspired by Apple's iMessage liquid glass design.
- */
-
 /* Global and Layout Styles */
-:root {
-  --app-bg: #e9e9eb;
-  --sidebar-bg: rgba(105, 251, 255, 0.2);
-  --chat-bg: #ffffff;
-  --message-blue: #007aff;
-  --message-gray: #e5e5ea;
-  --text-primary: #000000;
-  --text-secondary: #6d6d72;
-  --border-color: #d1d1d6;
-  --app-border-radius: 12px;
-  --container-max-width: 1200px;
-  --container-height: 90vh;
-}
-
 html, body {
   height: 100vh;
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
-  color: var(--text-primary);
-  background-color: #f0f2f5; /* A background for the page behind the app window */
+  overflow: hidden; /* Prevent body scroll */
+  font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
 }
 
-/* Centered main container for the app window effect */
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+#root {
+  height: 100%;
 }
 
 .container {
   width: 100%;
-  max-width: var(--container-max-width);
-  height: var(--container-height);
-  margin: 0;
+  max-width: none;
+  height: 100%;
   padding: 0;
+  margin: 0;
   box-sizing: border-box;
-  background-color: var(--app-bg);
-  border-radius: var(--app-border-radius);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  display: flex;
 }
 
 .row {
   height: 100%;
   display: flex;
   margin: 0;
-  width: 100%;
 }
 
 .info-panel {
-  flex: 0 0 320px; /* Fixed width for the sidebar */
-  padding: 1rem;
+  flex: 0 0 33.33%; /* Fixed width for the left panel */
+  padding: 2rem 4rem;
   box-sizing: border-box;
-  background-color: var(--sidebar-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background-color: #f4f5f7;
+  border-right: 1px solid #e0e0e0;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
 }
 
-.info-panel h4 {
-  font-weight: 600;
-  font-size: 2rem;
-  padding: 2rem 1rem 1rem;
-}
-
-.info-panel p {
-  font-size: 1.4rem;
-  color: var(--text-secondary);
-  padding: 0 1rem;
-}
-
-/* This is a placeholder for future conversation list styling */
-.conversation-list {
-  flex-grow: 1;
-  /* styles for individual items would go here */
-}
-
-
-#root {
-  flex: 1;
+.chat-wrapper {
+  flex: 1; /* Chat area takes the rest of the space */
   display: flex;
   height: 100%;
-  background-color: var(--chat-bg);
 }
 
 /* Chat Component Styles */
@@ -101,117 +48,100 @@ body {
   flex-direction: column;
   height: 100%;
   width: 100%;
+  background-color: #fff;
 }
 
 .message-list {
-  flex: 1 1 auto;
+  flex: 1 1 auto; /* Grow and shrink, with auto as basis */
   overflow-y: auto;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
 }
 
 .message {
   display: flex;
-  margin-bottom: 15px;
-  max-width: 75%;
-}
-
-.message .content {
-  /*padding: 10px 15px;*/
-  border-radius: 18px;
-  word-break: break-word;
-  line-height: 1.5;
+  margin-bottom: 12px;
+  line-height: 1.4;
 }
 
 .message .user {
-  margin-right: 1rem;
-  /*display: none; !* Hide the user name as it's implied by message position *!*/
+  font-weight: 600;
+  flex-shrink: 0;
+  padding-right: 8px;
+  color: #007bff;
 }
 
-/* Simulating iMessage like bubbles */
-.message.user-message {
-  align-self: flex-end;
+.message .content {
+  word-break: break-word;
 }
-.message.user-message .content {
-  background-color: var(--message-blue);
-  color: white;
-}
-
-.message.assistant-message {
-  align-self: flex-start;
-}
-.message.assistant-message .content {
-  background-color: var(--message-gray);
-  color: var(--text-primary);
-}
-
 
 .input-area {
-  flex-shrink: 0;
+  flex-shrink: 0; /* Don't shrink */
   display: flex;
   align-items: center;
-  padding: 1rem 1.5rem;
-  /*border-top: 1px solid var(--border-color);*/
-  background: var(--chat-bg);
+  padding: 10px 20px;
 }
 
 .input-area input {
   flex-grow: 1;
-  border: 1px solid #dcdcdc;
-  border-radius: 20px;
-  padding: 10px 18px;
+  border: 1px solid #ccc;
+  border-radius: 18px;
+  padding: 8px 15px;
   font-size: 14px;
-  margin-right: 10px;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  margin: 0 10px 0 0;
 }
 
 .input-area input:focus {
   outline: none;
-  border-color: var(--message-blue);
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
 .input-area button {
-  height: 40px;
-  width: 40px;
-  padding: 0;
-  border-radius: 50%;
-  border: none;
-  background-color: var(--message-blue);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s;
-}
-
-.input-area button:hover {
-  background-color: #0056b3;
-}
-
-/* Adding a placeholder for send icon */
-.input-area button::after {
-  content: '↑';
-  font-weight: bold;
-  font-size: 18px;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 20px;
+  border-radius: 18px;
+  margin: 0;
 }
 
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
-  body {
-    background-color: white;
-  }
-  .container {
-    height: 100vh;
-    border-radius: 0;
-    box-shadow: none;
-  }
   .info-panel {
     display: none;
   }
-  #root, .chat-container {
+  .chat-wrapper, .two-thirds.column {
+    flex-basis: 100%;
     width: 100%;
+    margin-left: 0;
+  }
+}
+
+
+/* Centered and Max-Width Layout for Desktop */
+@media (min-width: 960px) {
+  body {
+    background-color: #f0f2f5; /* Optional: Adds a subtle background color to the area outside the chat window */
+  }
+
+  #root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 1200px; /* Sets a maximum width for the entire chat app */
+    height: 90vh;      /* Sets the height to 90% of the viewport height */
+    margin: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Optional: Adds a subtle shadow for a floating effect */
+    border-radius: 8px; /* Optional: Rounds the corners of the chat window */
+    overflow: hidden;   /* Ensures the content stays within the rounded corners */
+  }
+
+  .row {
+    height: 100%;
+    margin: 0;
   }
 }

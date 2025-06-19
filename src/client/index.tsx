@@ -7,6 +7,7 @@ import {
   Route,
   Navigate,
   useParams,
+  Outlet,
 } from "react-router";
 import {nanoid} from "nanoid";
 
@@ -123,8 +124,27 @@ function App() {
           autoComplete="off"
         />
         <button type="submit" className="button-primary">
+          Send
         </button>
       </form>
+    </div>
+  );
+}
+
+function Layout() {
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="one-third column info-panel">
+          <h4><b>Chat.</b>abandon.ai</h4>
+          <p>
+            This is your private chat room. Share the link to invite your friends!
+          </p>
+        </div>
+        <div className="chat-wrapper">
+          <Outlet />
+        </div>
+      </div>
     </div>
   );
 }
@@ -133,9 +153,11 @@ function App() {
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Navigate to={`/${nanoid()}`}/>}/>
-      <Route path="/:room" element={<App/>}/>
-      <Route path="*" element={<Navigate to="/"/>}/>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Navigate to={`/${nanoid()}`}/>}/>
+        <Route path="/:room" element={<App/>}/>
+        <Route path="*" element={<Navigate to="/"/>}/>
+      </Route>
     </Routes>
   </BrowserRouter>,
 );
