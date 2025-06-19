@@ -85,6 +85,9 @@ function App() {
           const content = e.currentTarget.elements.namedItem(
             "content",
           ) as HTMLInputElement;
+
+          if (!content.value) return;
+
           const chatMessage: ChatMessage = {
             id: nanoid(8),
             content: content.value,
