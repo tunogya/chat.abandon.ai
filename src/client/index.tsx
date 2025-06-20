@@ -93,6 +93,7 @@ function App() {
             className="nickname-input"
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
+            autoComplete="off"
           />
           <input
             type="text"
@@ -102,6 +103,8 @@ function App() {
             onChange={(e) => setChatInput(e.target.value)}
             autoComplete="off"
           />
+          {/* 添加一个隐藏的提交按钮来确保回车键能触发表单提交 */}
+          <button type="submit" style={{ display: 'none' }} aria-hidden="true" />
         </form>
       </div>
     </div>
