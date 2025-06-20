@@ -281,3 +281,62 @@ ul ul, ol ol {
     background-position: 100% 0;
   }
 }
+
+/* public/styles.css */
+.chat-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-width: 0;
+}
+
+.messages {
+  position: absolute;
+  top: 0;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 960px;
+  padding: 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.input-container {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 960px;
+  box-sizing: border-box;
+  height: 30px;
+  display: flex;
+  border-top: none;
+}
+
+.nickname-input,
+.chat-input {
+  background: #222;
+  color: #c0c0c0;
+  border: none;
+  height: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.nickname-input {
+  width: 130px;
+  border-top: 1px solid #444;
+  border-right: 1px solid #444;
+  text-align: center;
+}
+
+.chat-input {
+  flex: 1;
+  border-top: 1px solid #444;
+  border-left: 1px solid #444;
+}
