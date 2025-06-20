@@ -1,3 +1,4 @@
+// src/client/index.tsx
 import {createRoot} from "react-dom/client";
 import {usePartySocket} from "partysocket/react";
 import React, {useState, useEffect, useRef} from "react";
@@ -14,18 +15,13 @@ import {names, type ChatMessage, type Message} from "../shared";
 
 function App() {
   const {room} = useParams();
-  const [nickname, setNickname] = useState(
+  const [nickname] = useState(
     names[Math.floor(Math.random() * names.length)],
   );
-  const [onlineUsers, setOnlineUsers] = useState([nickname]);
+  // Online users state is no longer used for display
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [chatInput, setChatInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // 模拟在线列表更新
-    setOnlineUsers([nickname]);
-  }, [nickname]);
 
   const socket = usePartySocket({
     party: "chat",
@@ -45,7 +41,7 @@ function App() {
   });
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({behavior: "smooth"});
+    messagesEndRef.current?.scrollIntoView({behavior: "auto"});
   };
 
   useEffect(scrollToBottom, [messages]);
@@ -66,45 +62,29 @@ function App() {
   };
 
   return (
-    <div className="chat-container">
-      <div className="sidebar">
-        <ul className="online-list">
-          {onlineUsers.map((user, i) => (
-            <li key={i}>{user}</li>
-          ))}
-        </ul>
-      </div>
-      <div className="chat-panel">
-        <div className="messages">
+    <div>
+      <div className="container">
+        <div id="messages">
           {messages.map((message) => (
             <div className="message" key={message.id}>
-              <span className="nick">{message.user}</span>
-              <span className="text">{message.content}</span>
-              <span className="time">
-                {new Date(message.time).toLocaleTimeString()}
-              </span>
+              <div className="nick">{message.user}</div>
+              <div className="text">{message.content}</div>
             </div>
           ))}
           <div ref={messagesEndRef} />
         </div>
-        <form className="input-container" onSubmit={handleSubmit}>
+      </div>
+
+      <div id="footer">
+        <form id="chatform" onSubmit={handleSubmit}>
           <input
             type="text"
-            className="nickname-input"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-            autoComplete="off"
-          />
-          <input
-            type="text"
-            className="chat-input"
+            id="chatinput"
             placeholder="Say something..."
             value={chatInput}
             onChange={(e) => setChatInput(e.target.value)}
             autoComplete="off"
           />
-          {/* 添加一个隐藏的提交按钮来确保回车键能触发表单提交 */}
-          <button type="submit" style={{ display: 'none' }} aria-hidden="true" />
         </form>
       </div>
     </div>
