@@ -17,17 +17,17 @@ export class Chat extends Server<Env> {
   }
 
   onStart() {
-    // this is where you can initialize things that need to be done before the server starts
-    // for example, load previous messages from a database or a service
+    // // 删除现有表以重置结构
+    // this.ctx.storage.sql.exec(`DROP TABLE IF EXISTS messages`);
 
-    // create the messages table if it doesn't exist
+    // 创建包含时间戳的新表
     this.ctx.storage.sql.exec(
-      `CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, user TEXT, role TEXT, content TEXT)`,
+      `CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, user TEXT, role TEXT, content TEXT, time INTEGER)`,
     );
 
-    // load the messages from the database
+    // 从现在为空的数据库中加载消息
     this.messages = this.ctx.storage.sql
-      .exec(`SELECT * FROM messages`)
+      .exec(`SELECT * FROM messages ORDER BY time ASC`)
       .toArray() as ChatMessage[];
   }
 
@@ -41,7 +41,7 @@ export class Chat extends Server<Env> {
   }
 
   saveMessage(message: ChatMessage) {
-    // check if the message already exists
+    // 检查消息是否已存在
     const existingMessage = this.messages.find((m) => m.id === message.id);
     if (existingMessage) {
       this.messages = this.messages.map((m) => {
@@ -54,22 +54,20 @@ export class Chat extends Server<Env> {
       this.messages.push(message);
     }
 
+    // 使用参数化查询来防止SQL注入并保存消息
     this.ctx.storage.sql.exec(
-      `INSERT INTO messages (id, user, role, content) VALUES ('${
-        message.id
-      }', '${message.user}', '${message.role}', ${JSON.stringify(
-        message.content,
-      )}) ON CONFLICT (id) DO UPDATE SET content = ${JSON.stringify(
-        message.content,
-      )}`,
+      `INSERT INTO messages (id, user, role, content, time) VALUES (?, ?, ?, ?, ?)
+          ON CONFLICT (id) DO UPDATE SET content = excluded.content, time = excluded.time`,
+      message.id,
+      message.user,
+      message.role,
+      message.content,
+      message.time,
     );
   }
 
   onMessage(connection: Connection, message: WSMessage) {
-    // let's broadcast the raw message to everyone else
     this.broadcast(message);
-
-    // let's update our local messages store
     const parsed = JSON.parse(message as string) as Message;
     if (parsed.type === "add" || parsed.type === "update") {
       this.saveMessage(parsed);

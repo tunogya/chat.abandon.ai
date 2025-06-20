@@ -7,17 +7,25 @@ import {
   Route,
   Navigate,
   useParams,
-  Outlet,
 } from "react-router";
 import {nanoid} from "nanoid";
 
 import {names, type ChatMessage, type Message} from "../shared";
 
 function App() {
-  const [name] = useState(names[Math.floor(Math.random() * names.length)]);
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const {room} = useParams();
-  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+  const [nickname, setNickname] = useState(
+    names[Math.floor(Math.random() * names.length)],
+  );
+  const [onlineUsers, setOnlineUsers] = useState([nickname]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [chatInput, setChatInput] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // 模拟在线列表更新
+    setOnlineUsers([nickname]);
+  }, [nickname]);
 
   const socket = usePartySocket({
     party: "chat",
@@ -25,139 +33,90 @@ function App() {
     onMessage: (evt) => {
       const message = JSON.parse(evt.data as string) as Message;
       if (message.type === "add") {
-        const foundIndex = messages.findIndex((m) => m.id === message.id);
-        if (foundIndex === -1) {
-          setMessages((messages) => [
-            ...messages,
-            {
-              id: message.id,
-              content: message.content,
-              user: message.user,
-              role: message.role,
-            },
-          ]);
-        } else {
-          setMessages((messages) => {
-            return messages
-              .slice(0, foundIndex)
-              .concat({
-                id: message.id,
-                content: message.content,
-                user: message.user,
-                role: message.role,
-              })
-              .concat(messages.slice(foundIndex + 1));
-          });
-        }
+        setMessages((prevMessages) => [...prevMessages, message]);
       } else if (message.type === "update") {
-        setMessages((messages) =>
-          messages.map((m) =>
-            m.id === message.id
-              ? {
-                id: message.id,
-                content: message.content,
-                user: message.user,
-                role: message.role,
-              }
-              : m,
-          ),
+        setMessages((prevMessages) =>
+          prevMessages.map((m) => (m.id === message.id ? message : m)),
         );
-      } else {
+      } else if (message.type === "all") {
         setMessages(message.messages);
       }
     },
   });
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView();
+    messagesEndRef.current?.scrollIntoView({behavior: "smooth"});
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+  useEffect(scrollToBottom, [messages]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const contentInput = e.currentTarget.elements.namedItem(
-      "content"
-    ) as HTMLInputElement;
-    const content = contentInput.value.trim();
-
-    if (content) {
+    if (chatInput.trim()) {
       const chatMessage: ChatMessage = {
         id: nanoid(8),
-        content,
-        user: name,
+        content: chatInput,
+        user: nickname,
         role: "user",
+        time: Date.now(),
       };
-
-      // Optimistically add message to UI
-      setMessages((prevMessages) => [...prevMessages, chatMessage]);
-
-      socket.send(
-        JSON.stringify({
-          type: "add",
-          ...chatMessage,
-        } satisfies Message)
-      );
-
-      contentInput.value = "";
+      socket.send(JSON.stringify({type: "add", ...chatMessage}));
+      setChatInput("");
     }
   };
 
   return (
     <div className="chat-container">
-      <div className="message-list">
-        {messages.map((message) => (
-          <div key={message.id} className="message">
-            <div className="user">{message.user}:</div>
-            <div className="content">{message.content}</div>
-          </div>
-        ))}
-        <div ref={messagesEndRef}/>
+      <div className="sidebar">
+        <ul className="online-list">
+          {onlineUsers.map((user, i) => (
+            <li key={i}>{user}</li>
+          ))}
+        </ul>
       </div>
-      <form className="input-area" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="content"
-          placeholder={`Hello ${name}! Type a message...`}
-          autoComplete="off"
-        />
-        <button type="submit" className="button-primary">
-          Send
-        </button>
-      </form>
+      <div className="chat-panel">
+        <div className="messages">
+          {messages.map((message) => (
+            <div className="message" key={message.id}>
+              <span className="nick">{message.user}</span>
+              <span className="text">{message.content}</span>
+              <span className="time">
+                {new Date(message.time).toLocaleTimeString()}
+              </span>
+            </div>
+          ))}
+          <div ref={messagesEndRef} />
+        </div>
+        <form className="input-container" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            className="nickname-input"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+          />
+          <input
+            type="text"
+            className="chat-input"
+            placeholder="Say something..."
+            value={chatInput}
+            onChange={(e) => setChatInput(e.target.value)}
+            autoComplete="off"
+          />
+        </form>
+      </div>
     </div>
   );
 }
 
-function Layout() {
-  return (
-    <div className="container">
-      <div className="row">
-        <div className="one-third column info-panel">
-          <h4><b>Chat.</b>abandon.ai</h4>
-          <p>
-            This is your private chat room. Share the link to invite your friends!
-          </p>
-        </div>
-        <div className="chat-wrapper">
-          <Outlet />
-        </div>
-      </div>
-    </div>
+const rootElement = document.getElementById("root");
+if (rootElement) {
+  createRoot(rootElement).render(
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to={`/${nanoid()}`} />} />
+        <Route path="/:room" element={<App />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </BrowserRouter>,
   );
 }
-
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-createRoot(document.getElementById("root")!).render(
-  <BrowserRouter>
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<Navigate to={`/${nanoid()}`}/>}/>
-        <Route path="/:room" element={<App/>}/>
-        <Route path="*" element={<Navigate to="/"/>}/>
-      </Route>
-    </Routes>
-  </BrowserRouter>,
-);
