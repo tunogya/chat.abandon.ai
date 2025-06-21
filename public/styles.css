@@ -294,7 +294,7 @@ ul ul, ol ol {
 .messages {
   position: absolute;
   top: 0;
-  bottom: 30px;
+  bottom: calc(30px + env(safe-area-inset-bottom)); /* Adjusted for safe area */
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -307,7 +307,7 @@ ul ul, ol ol {
 
 .input-container {
   position: absolute;
-  bottom: 0;
+  bottom: env(safe-area-inset-bottom); /* Adjusted for safe area */
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -339,4 +339,15 @@ ul ul, ol ol {
   flex: 1;
   border-top: 1px solid #444;
   border-left: 1px solid #444;
+  padding-bottom: env(safe-area-inset-bottom); /* Added for safe area */
+}
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .messages {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .input-container {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
