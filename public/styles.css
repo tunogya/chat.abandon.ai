@@ -250,9 +250,8 @@ ul ul, ol ol {
 
 @media only screen and (max-width: 600px) {
   #messages {
-    /*border: none;*/
+    border: none;
     padding: 0.5em;
-    border-left: 1px solid var(--main-border);
   }
   .message {
     padding-bottom: 0.5em;
