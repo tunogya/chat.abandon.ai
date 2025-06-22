@@ -65,6 +65,10 @@ function App() {
     <div>
       <div className="container">
         <div id="messages">
+          <div className="message info">
+            <div className="nick">*</div>
+            <div className="text">Welcome to chat.abandon.ai, a minimal, distraction-free chat application.</div>
+          </div>
           {messages.map((message) => (
             <div className="message" key={message.id}>
               <div className="nick">{message.user}</div>
@@ -77,8 +81,7 @@ function App() {
 
       <div id="footer">
         <form id="chatform" onSubmit={handleSubmit}>
-          <input
-            type="text"
+          <textarea
             id="chatinput"
             placeholder="Say something..."
             value={chatInput}

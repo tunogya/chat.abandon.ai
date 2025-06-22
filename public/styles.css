@@ -1,9 +1,9 @@
 /* public/styles.css */
 :root {
   --main-fg: #c0c0c0;
-  --main-bg: #1c1c1c;
-  --main-border: #8f8;
-  --link-color: #92ADEE;
+  --main-bg: #191919;
+  --main-border: rgba(0, 119, 0, 0.5);
+  --link-color: #00bb00;
 }
 
 body {
@@ -38,10 +38,10 @@ label {
 input,
 textarea {
   background: none;
-  border: none;
+  border: #00bb00;
   outline: none;
   resize: none;
-  color: inherit;
+  color: #00bb00;
 }
 
 h4 {
@@ -108,8 +108,16 @@ ul li {
 }
 
 #messages {
-  padding-bottom: 50px; /* Space for footer */
+  padding-bottom: 54px; /* Space for footer */
   padding-top: 2em;
+}
+
+.info .nick, .info .text {
+  color: var(--link-color);
+}
+
+.message {
+  border-left: 1px solid var(--main-border);
 }
 
 .message, .refmessage {
@@ -128,7 +136,7 @@ ul li {
   text-align: right;
   white-space: nowrap;
   overflow: hidden;
-  color: #8f8;
+  color: var(--link-color);
 }
 
 .trip {
@@ -137,7 +145,7 @@ ul li {
 
 .text {
   margin: 0;
-  margin-left: 0;
+  margin-left: 1em;
 }
 
 .text p {
@@ -171,7 +179,7 @@ ul li {
   color: var(--main-fg);
   font-family: 'DejaVu Sans Mono', monospace;
   padding: 0 1em;
-  margin: 0.1em;
+  margin: 0.5em;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -201,7 +209,7 @@ hr {
 }
 
 mark {
-  background-color: #60ac39;
+  background-color: var(--link-color);
   color: black;
 }
 
