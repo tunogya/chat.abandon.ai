@@ -157,12 +157,21 @@ ul li {
   border-left: 1px solid var(--main-border);
   max-width: 600px;
   margin: 0 auto;
+  display: flex;
 }
 
 #chatinput {
   width: 100%;
   padding: 1em;
   box-sizing: border-box;
+}
+
+#sendbutton {
+  background: none;
+  color: var(--main-fg);
+  font-family: 'DejaVu Sans Mono', monospace;
+  padding: 0 1em;
+  margin: 0.1em;
 }
 
 h1,h2,h3,h4,h5,h6 {

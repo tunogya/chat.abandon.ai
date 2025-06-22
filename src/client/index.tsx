@@ -85,6 +85,7 @@ function App() {
             onChange={(e) => setChatInput(e.target.value)}
             autoComplete="off"
           />
+          <button type="submit" id={"sendbutton"}>Send</button>
         </form>
       </div>
     </div>
