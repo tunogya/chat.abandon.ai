@@ -267,14 +267,7 @@ ul ul, ol ol {
     display: inline;
   }
 }
-.jebbed {
-  background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: rainbow_animation 6s ease-in-out infinite;
-  background-size: 400% 100%;
-}
+
 @keyframes rainbow_animation {
   0%,100% {
     background-position: 0 0;
@@ -282,15 +275,6 @@ ul ul, ol ol {
   50% {
     background-position: 100% 0;
   }
-}
-
-/* public/styles.css */
-.chat-panel {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  min-width: 0;
 }
 
 .messages {
@@ -307,49 +291,8 @@ ul ul, ol ol {
   box-sizing: border-box;
 }
 
-.input-container {
-  position: absolute;
-  bottom: env(safe-area-inset-bottom); /* Adjusted for safe area */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 960px;
-  box-sizing: border-box;
-  height: 30px;
-  display: flex;
-  border-top: none;
-}
-
-.nickname-input,
-.chat-input {
-  background: #222;
-  color: #c0c0c0;
-  border: none;
-  height: 100%;
-  padding: 0 10px;
-  box-sizing: border-box;
-}
-
-.nickname-input {
-  width: 130px;
-  border-top: 1px solid #444;
-  border-right: 1px solid #444;
-  text-align: center;
-}
-
-.chat-input {
-  flex: 1;
-  border-top: 1px solid #444;
-  border-left: 1px solid #444;
-  padding-bottom: env(safe-area-inset-bottom); /* Added for safe area */
-}
-
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
   .messages {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  .input-container {
     padding-bottom: env(safe-area-inset-bottom);
   }
 }
