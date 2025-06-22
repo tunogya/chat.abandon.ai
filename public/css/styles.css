@@ -3,8 +3,6 @@ body {
   padding: 0;
   margin: 0;
   overflow-y: scroll;
-  font-family: 'DejaVu Sans Mono', monospace;
-  font-size: 12px;
 }
 
 body,
@@ -12,14 +10,10 @@ input,
 textarea {
   font-family: 'DejaVu Sans Mono', monospace;
   font-size: 12px;
-  tab-size: 4;
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
 }
 
 input[type="checkbox"] {
-  margin: 0;
-  margin-right: 1em;
+  margin: 0 1em 0 0;
 }
 
 label {
@@ -41,30 +35,17 @@ h4 {
 }
 
 pre {
-  display: block;
-  line-height: 1.42857143;
   tab-size: 2;
   white-space: pre-wrap;
   word-wrap: break-word;
   tab-size: 4;
   -moz-tab-size: 4;
-  -o-tab-size: 4;
-  word-break: break-all;
-  word-wrap: break-word;
-  background-color: #4e4e4e;
-  border: 1px solid #000;
-  border-radius: 4px;
-  color: #797979;
-  margin: 0 auto;
 }
 
 a {
+  color: inherit;
   text-decoration: none;
   cursor: pointer;
-}
-
-a:hover {
-  text-decoration: underline;
 }
 
 ul, ol {
@@ -74,8 +55,8 @@ ul, ol {
   list-style-type: disc;
   margin-block-start: 1em;
   margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
   padding-inline-start: 40px;
 }
 
@@ -97,7 +78,6 @@ ul li {
 }
 
 #messages {
-  padding-bottom: 54px; /* Space for footer */
   padding-top: 2em;
 }
 
@@ -124,8 +104,7 @@ ul li {
 }
 
 .text {
-  margin: 0;
-  margin-left: 1em;
+  margin: 0 0 0 1em;
 }
 
 .text p {
@@ -160,88 +139,6 @@ ul li {
   margin: 0.5em;
   border-left: 1px solid;
   border-top: 1px solid;
-}
-
-h1,h2,h3,h4,h5,h6 {
-  margin: 3px;
-  margin-top: 0px;
-}
-
-blockquote {
-  padding: 3px 10px;
-  margin: 3px;
-  border-left: 5px solid #4e4e4e;
-}
-
-code {
-  padding: 2px 4px;
-  font-size: 90%;
-  color: #000000;
-  background-color: #4e4e4e;
-  border-radius: 4px;
-}
-
-hr {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  border: 0;
-  border-top: 1px solid #4e4e4e;
-}
-
-mark {
-  color: black;
-}
-
-table {
-  background-color: transparent;
-  width: 100%;
-  max-width: 100%;
-  margin-bottom: 20px;
-  border-spacing: 0;
-  border-collapse: collapse;
-}
-table > caption + thead > tr:first-child > th, table > colgroup + thead > tr:first-child > th, table > thead:first-child > tr:first-child > th, table > caption + thead > tr:first-child > td, table > colgroup + thead > tr:first-child > td, table > thead:first-child > tr:first-child > td {
-  border-top: 0;
-}
-table > thead > tr > th {
-  vertical-align: bottom;
-  border-bottom: 2px solid #4e4e4e;
-}
-table > thead > tr > th, table > tbody > tr > th, table > tfoot > tr > th, table > thead > tr > td, table > tbody > tr > td, table > tfoot > tr > td {
-  padding: 8px;
-  line-height: 1.42857143;
-  vertical-align: top;
-  border-top: 1px solid #4e4e4e;
-}
-th {
-  text-align: left;
-}
-td, th {
-  padding: 0;
-}
-table > tbody > tr:nth-child(odd) > td, table > tbody > tr:nth-child(odd) > th {
-  background-color: #4e4e4e;
-}
-table > thead > tr > th, table > tbody > tr > th, table > tfoot > tr > th, table > thead > tr > td, table > tbody > tr > td, table > tfoot > tr > td {
-  padding: 8px;
-  line-height: 1.42857143;
-  vertical-align: top;
-  border-top: 1px solid #4e4e4e;
-}
-td, th {
-  padding: 0;
-}
-img {
-  max-width: 50%;
-  max-height: 800px;
-}
-
-ul, ol {
-  padding: 0;
-  margin: 0;
-}
-ul ul, ol ol {
-  padding-left: 2em;
 }
 
 @media only screen and (max-width: 600px) {
