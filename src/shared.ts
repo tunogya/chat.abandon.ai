@@ -29,8 +29,6 @@ export type Message =
 };
 
 export const names = [
-  "Alice", "Bob", "Charlie", "David", "Eve", "Frank", "Grace", "Heidi",
-  "Ivan", "Judy", "Kevin", "Linda", "Mallory", "Nancy", "Oscar", "Peggy",
-  "Quentin", "Randy", "Steve", "Trent", "Ursula", "Victor", "Walter",
-  "Xavier", "Yvonne", "Zoe",
+  "Labubu", "Zimomo", "Mokoko", "Tycoco", "Yaya", "Pato", "Vos", "Pippo",
+  "Spooky",
 ];
