@@ -176,10 +176,11 @@ ul li {
 
 #sendbutton {
   background: none;
-  color: var(--main-fg);
+  color: var(--link-color);
   font-family: 'DejaVu Sans Mono', monospace;
   padding: 0 1em;
   margin: 0.5em;
+  border: 1px solid var(--main-border);
 }
 
 h1,h2,h3,h4,h5,h6 {
