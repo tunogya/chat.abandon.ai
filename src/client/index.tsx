@@ -69,6 +69,10 @@ function App() {
             <div className="nick">*</div>
             <div className="text">Welcome to chat.abandon.ai, a minimal, distraction-free chat application.</div>
           </div>
+          <div className="message info">
+            <div className="nick">*</div>
+            <div className="text">Powered by ABANDON INC.</div>
+          </div>
           {messages.map((message) => (
             <div className="message" key={message.id}>
               <div className="nick">{message.user}</div>
