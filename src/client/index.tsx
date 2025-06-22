@@ -71,7 +71,7 @@ function App() {
           </div>
           <div className="message info">
             <div className="nick">*</div>
-            <div className="text">Powered by ABANDON INC.</div>
+            <div className="text">Copyright © {new Date().getFullYear()} Abandon Inc. All rights reserved.</div>
           </div>
           {messages.map((message) => (
             <div className="message" key={message.id}>
