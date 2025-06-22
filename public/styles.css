@@ -4,6 +4,7 @@
   --main-bg: #191919;
   --main-border: rgba(0, 119, 0, 0.5);
   --link-color: #00bb00;
+  background-color: var(--main-bg);
 }
 
 body {
