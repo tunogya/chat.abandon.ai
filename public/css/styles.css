@@ -83,6 +83,7 @@ ul li {
 
 .message, .refmessage {
   padding-bottom: 1em;
+  border-left: 1px solid;
 }
 
 .message .text {
@@ -143,12 +144,11 @@ ul li {
 
 @media only screen and (max-width: 600px) {
   #messages {
-    border: none;
     padding: 1em 1em 54px 1em;
   }
   .message {
     padding-bottom: 0.5em;
-    border: none;
+    border-left: none;
   }
   .nick {
     margin: 0;

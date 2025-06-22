@@ -7,10 +7,10 @@ textarea {
     color: #00bb00;
 }
 .message {
-    border-left: 1px solid rgba(0, 119, 0, 0.5);
+    border-color: rgba(0, 119, 0, 1);
 }
 .refmessage {
-    border-left: 1px solid rgba(0, 119, 0, 1);
+    border-color: rgba(0, 119, 0, 1);
 }
 .nick {
     color: #009900;
