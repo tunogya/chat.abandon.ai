@@ -2,7 +2,7 @@
 :root {
   --main-fg: #c0c0c0;
   --main-bg: #1c1c1c;
-  --main-border: #404040;
+  --main-border: #8f8;
   --link-color: #92ADEE;
 }
 
@@ -154,6 +154,7 @@ ul li {
 
 #chatform {
   border-top: 1px solid var(--main-border);
+  border-left: 1px solid var(--main-border);
   max-width: 600px;
   margin: 0 auto;
 }
@@ -249,8 +250,9 @@ ul ul, ol ol {
 
 @media only screen and (max-width: 600px) {
   #messages {
-    border: none;
+    /*border: none;*/
     padding: 0.5em;
+    border-left: 1px solid var(--main-border);
   }
   .message {
     padding-bottom: 0.5em;
