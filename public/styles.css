@@ -268,10 +268,11 @@ ul ul, ol ol {
 @media only screen and (max-width: 600px) {
   #messages {
     border: none;
-    padding: 0.5em;
+    padding: 1em 1em 54px 1em;
   }
   .message {
     padding-bottom: 0.5em;
+    border: none;
   }
   .nick {
     margin: 0;
