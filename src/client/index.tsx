@@ -11,13 +11,11 @@ import {
 } from "react-router";
 import {nanoid} from "nanoid";
 
-import {names, type ChatMessage, type Message} from "../shared";
+import {type ChatMessage, type Message} from "../shared";
 
 function App() {
   const {room} = useParams();
-  const [nickname] = useState(
-    names[Math.floor(Math.random() * names.length)],
-  );
+  const [nickname] = useState(nanoid(8));
   // Online users state is no longer used for display
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [chatInput, setChatInput] = useState("");

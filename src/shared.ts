@@ -28,7 +28,3 @@ export type Message =
   messages: ChatMessage[];
 };
 
-export const names = [
-  "Labubu", "Zimomo", "Mokoko", "Tycoco", "Yaya", "Pato", "Vos", "Pippo",
-  "Spooky",
-];
