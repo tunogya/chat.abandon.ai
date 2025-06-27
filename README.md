@@ -1,12 +1,12 @@
-# Durable Chat App
+# Abandon Chat App
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/durable-chat-template)
 
-![Template Preview](https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/da00d330-9a3b-40a2-e6df-b08813fb7200/public)
+A real-time chat application built with Cloudflare Workers, Durable Objects, and PartyKit.
 
 <!-- dash-content-start -->
 
-With this template, you can deploy your own chat app to converse with other users in real-time. Going to the [demo website](https://durable-chat-template.templates.workers.dev) puts you into a unique chat room based on the ID in the url. Share that ID with others to chat with them! This is powered by [Durable Objects](https://developers.cloudflare.com/durable-objects/) and [PartyKit](https://www.partykit.io/).
+With this application, you can deploy your own chat app to converse with other users in real-time. Going to the website puts you into a unique chat room based on the ID in the url. Share that ID with others to chat with them! This is powered by [Durable Objects](https://developers.cloudflare.com/durable-objects/) and [PartyKit](https://www.partykit.io/).
 
 ## How It Works
 
@@ -16,23 +16,44 @@ The Durable Object instance that manages the chat room runs in one location, and
 
 <!-- dash-content-end -->
 
+## Project Structure
+
+The project is divided into two main parts:
+
+-   `src/client`: Contains the frontend React application.
+-   `src/server`: Contains the Cloudflare Worker and Durable Object backend logic.
+
 ## Getting Started
 
-Outside of this repo, you can start a new project with this template using [C3](https://developers.cloudflare.com/pages/get-started/c3/) (the `create-cloudflare` CLI):
+To get a local copy up and running, follow these simple steps.
 
-```
-npm create cloudflare@latest -- --template=cloudflare/templates/durable-chat-template
-```
+### Prerequisites
 
-A live public deployment of this template is available at [https://durable-chat-template.templates.workers.dev](https://durable-chat-template.templates.workers.dev)
+Make sure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
 
-## Setup Steps
+### Installation
 
-1. Install the project dependencies with a package manager of your choice:
-   ```bash
-   npm install
-   ```
-2. Deploy the project!
-   ```bash
-   npx wrangler deploy
-   ```
+1.  Install NPM packages:
+    ```sh
+    npm install
+    ```
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `npm run dev`
+
+Runs the app in development mode using `wrangler dev`. This will start a local server and allow you to test the application.
+
+### `npm run deploy`
+
+Deploys the application to Cloudflare Workers.
+
+### `npm run check`
+
+Runs TypeScript checks for both client and server code, and performs a dry run of the deployment to check for configuration issues.
+
+### `npm run cf-typegen`
+
+Generates TypeScript types for your `wrangler.toml` configuration, which can be found in `src/server/worker-configuration.d.ts`.
