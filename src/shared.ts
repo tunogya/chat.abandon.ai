@@ -24,7 +24,10 @@ export type Message =
   time: number;
 }
   | {
-  type: "all";
-  messages: ChatMessage[];
-};
+      type: "all";
+      messages: ChatMessage[];
+    }
+  | {
+      type: "clear";
+    };
 

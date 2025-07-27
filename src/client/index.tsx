@@ -34,6 +34,8 @@ function App() {
         );
       } else if (message.type === "all") {
         setMessages(message.messages);
+      } else if (message.type === "clear") {
+        setMessages([]);
       }
     },
   });
@@ -47,14 +49,15 @@ function App() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (chatInput.trim()) {
-      const chatMessage: ChatMessage = {
+      const message: Message = {
+        type: "add",
         id: nanoid(8),
         content: chatInput,
         user: nickname,
         role: "user",
         time: Date.now(),
       };
-      socket.send(JSON.stringify({type: "add", ...chatMessage}));
+      socket.send(JSON.stringify(message));
       setChatInput("");
     }
   };
@@ -70,6 +73,10 @@ function App() {
           <div className="message info">
             <div className="nick">*</div>
             <div className="text">Copyright © {new Date().getFullYear()} Abandon Inc. All rights reserved.</div>
+          </div>
+          <div className="message info">
+            <div className="nick">*</div>
+            <div className="text">Enter `/clear` to clear the chat history.</div>
           </div>
           {messages.map((message) => (
             <div className="message" key={message.id}>

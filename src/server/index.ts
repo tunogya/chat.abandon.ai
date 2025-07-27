@@ -67,10 +67,19 @@ export class Chat extends Server<Env> {
   }
 
   onMessage(connection: Connection, message: WSMessage) {
-    this.broadcast(message);
     const parsed = JSON.parse(message as string) as Message;
-    if (parsed.type === "add" || parsed.type === "update") {
-      this.saveMessage(parsed);
+    if (parsed.type === "add" && parsed.content === "/clear") {
+      // 清除数据库
+      this.ctx.storage.sql.exec(`DELETE FROM messages`);
+      // 清空内存中的消息
+      this.messages = [];
+      // 向所有客户端广播清除消息
+      this.broadcastMessage({ type: "clear" });
+    } else {
+      this.broadcast(message);
+      if (parsed.type === "add" || parsed.type === "update") {
+        this.saveMessage(parsed);
+      }
     }
   }
 }
