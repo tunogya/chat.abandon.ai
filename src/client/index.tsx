@@ -95,6 +95,12 @@ function App() {
             placeholder="Say something..."
             value={chatInput}
             onChange={(e) => setChatInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSubmit(e as any);
+              }
+            }}
             autoComplete="off"
           />
           <button type="submit" id={"sendbutton"}>Send</button>
